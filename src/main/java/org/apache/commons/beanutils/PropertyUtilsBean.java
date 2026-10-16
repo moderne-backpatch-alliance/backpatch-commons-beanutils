@@ -129,7 +129,7 @@ public class PropertyUtilsBean {
     private static final Object[] EMPTY_OBJECT_ARRAY = new Object[0];
 
     /** Property names never returned by introspection: they lead to the bean's ClassLoader. */
-    private static final String[] SUPPRESSED_PROPERTY_NAMES = new String[] {"class"};
+    private static final String[] SUPPRESSED_PROPERTY_NAMES = new String[] {"class", "declaringClass"};
 
     /** Log instance */
     private Log log = LogFactory.getLog(PropertyUtils.class);
@@ -957,7 +957,7 @@ public class PropertyUtilsBean {
      *
      * <p><strong>FIXME</strong> - Does not work with DynaBeans.</p>
      *
-     * <p>The <code>class</code> property is not returned.</p>
+     * <p>The <code>class</code> and <code>declaringClass</code> properties are not returned.</p>
      *
      * @param beanClass Bean class for which property descriptors are requested
      * @return the property descriptors
