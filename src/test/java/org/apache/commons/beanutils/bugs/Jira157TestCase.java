@@ -107,8 +107,8 @@ public class Jira157TestCase extends TestCase {
             log.error("Describe Serializable: " + t.getMessage(), t);
             fail("Describe Serializable Threw exception: " + t);
         }
-        assertEquals("Check Size", 1, result.size());
-        assertTrue("Class", result.containsKey("class"));
+        assertEquals("Check Size", 0, result.size());
+        assertFalse("Class", result.containsKey("class"));
     }
 
     /**
@@ -133,8 +133,8 @@ public class Jira157TestCase extends TestCase {
             log.error("Describe Interface: " + t.getMessage(), t);
             fail("Describe Interface Threw exception: " + t);
         }
-        assertEquals("Check Size", 3, result.size());
-        assertTrue("Class", result.containsKey("class"));
+        assertEquals("Check Size", 2, result.size());
+        assertFalse("Class", result.containsKey("class"));
         assertTrue("X Key", result.containsKey("x"));
         assertTrue("Y Key", result.containsKey("y"));
         assertEquals("X Value", "x-value", result.get("x"));
@@ -156,8 +156,8 @@ public class Jira157TestCase extends TestCase {
             log.error("Describe Bean: " + t.getMessage(), t);
             fail("Describe Bean Threw exception: " + t);
         }
-        assertEquals("Check Size", 2, result.size());
-        assertTrue("Class", result.containsKey("class"));
+        assertEquals("Check Size", 1, result.size());
+        assertFalse("Class", result.containsKey("class"));
         assertTrue("publicFoo Key", result.containsKey("publicFoo"));
         assertEquals("publicFoo Value", "PublicFoo Value", result.get("publicFoo"));
     }
