@@ -189,6 +189,7 @@ public class PropertyUtilsBean {
         introspectors.clear();
         introspectors.add(DefaultBeanIntrospector.INSTANCE);
         introspectors.add(SuppressPropertiesBeanIntrospector.SUPPRESS_CLASS);
+        introspectors.add(SuppressPropertiesBeanIntrospector.SUPPRESS_DECLARING_CLASS);
     }
 
     /**
