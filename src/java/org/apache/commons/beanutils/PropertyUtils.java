@@ -211,6 +211,9 @@ public class PropertyUtils {
         mappedDescriptorsCache.setFast(true);
     }
 
+    /** Property names never returned by introspection: they lead to the bean's ClassLoader. */
+    private static final String[] SUPPRESSED_PROPERTY_NAMES = new String[] {"class"};
+
 
     // --------------------------------------------------------- Public Methods
 
@@ -924,6 +927,8 @@ public class PropertyUtils {
      *
      * <p><strong>FIXME</strong> - Does not work with DynaBeans.</p>
      *
+     * <p>The <code>class</code> property is not returned.</p>
+     *
      * @param beanClass Bean class for which property descriptors are requested
      *
      * @exception IllegalArgumentException if <code>beanClass</code> is null
@@ -954,6 +959,7 @@ public class PropertyUtils {
         if (descriptors == null) {
             descriptors = new PropertyDescriptor[0];
         }
+        descriptors = removeSuppressedProperties(descriptors);
         descriptorsCache.put(beanClass, descriptors);
         return (descriptors);
 
@@ -1788,6 +1794,37 @@ public class PropertyUtils {
         values[0] = value;
         writeMethod.invoke(bean, values);
 
+    }
+
+
+    /** Returns a copy without the suppressed properties; the array may be the Introspector's own. */
+    private static PropertyDescriptor[] removeSuppressedProperties(PropertyDescriptor[] descriptors) {
+        int kept = 0;
+        for (int i = 0; i < descriptors.length; i++) {
+            if (!isSuppressedPropertyName(descriptors[i].getName())) {
+                kept++;
+            }
+        }
+        if (kept == descriptors.length) {
+            return descriptors;
+        }
+        PropertyDescriptor[] result = new PropertyDescriptor[kept];
+        int j = 0;
+        for (int i = 0; i < descriptors.length; i++) {
+            if (!isSuppressedPropertyName(descriptors[i].getName())) {
+                result[j++] = descriptors[i];
+            }
+        }
+        return result;
+    }
+
+    private static boolean isSuppressedPropertyName(String name) {
+        for (int i = 0; i < SUPPRESSED_PROPERTY_NAMES.length; i++) {
+            if (SUPPRESSED_PROPERTY_NAMES[i].equals(name)) {
+                return true;
+            }
+        }
+        return false;
     }
 
 
