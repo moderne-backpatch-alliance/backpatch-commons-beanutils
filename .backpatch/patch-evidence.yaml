@@ -1,0 +1,21 @@
+schema: osera-patch-evidence/0.1.0
+producer: moderne
+release: 1.9.4.1-backpatch-00001
+baseline: v1.9.4+backpatch.baseline
+fixes:
+  - cve: CVE-2025-48734
+    upstream_fix_url: https://github.com/apache/commons-beanutils/commit/28ad955a1613ed5885870cc7da52093c1ce739dc
+    advisory_url: https://nvd.nist.gov/vuln/detail/CVE-2025-48734
+    patch_commit_url: https://github.com/moderne-backpatch-alliance/backpatch-commons-beanutils/commit/387bd43
+    basis: backport
+    artifacts:
+      - commons-beanutils:commons-beanutils
+    note: New in this release; ported onto 1.9.4; fixed at 1.9.4.1-backpatch-00001 (backpatch-commons-beanutils@387bd43).
+tests:
+  commit: 387bd43487f1e451133dc37f7aeb08bf0ed13280
+  command: JAVA_HOME=<jdk> mvn -B clean test
+  runtime: Azul Zulu (Java 1.8.0_382), Apache Maven 3.9.16, macOS aarch64
+  report: commons-beanutils-1.9.4.1-backpatch-00001-tests.zip
+  report_sha256: 3b8641d48193238981510c00d72db2e923ec20784c67d648d84b96eb75a24176
+  result: pass
+  note: the full suite at the tested commit, 1297 tests run, 0 failed, 3 skipped; the regression tests for CVE-2025-48734 are EnumDeclaringClassTestCase,TestEnum
