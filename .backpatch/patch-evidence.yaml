@@ -1,6 +1,6 @@
 schema: osera-patch-evidence/0.1.0
 producer: moderne
-release: 1.6.1.1-backpatch-00001
+release: 1.6.1.1-backpatch-00002
 baseline: v1.6.1+backpatch.baseline
 fixes:
   - cve: CVE-2019-10086
@@ -10,12 +10,20 @@ fixes:
     basis: adapted
     artifacts:
       - commons-beanutils:commons-beanutils
-    note: New in this release; adapted onto 1.6.1; fixed at 1.6.1.1-backpatch-00001 (backpatch-commons-beanutils@a55bce0).
+    note: Carried from 1.6.1.1-backpatch-00001.
+  - cve: CVE-2025-48734
+    upstream_fix_url: https://github.com/apache/commons-beanutils/commit/28ad955a1613ed5885870cc7da52093c1ce739dc
+    advisory_url: https://nvd.nist.gov/vuln/detail/CVE-2025-48734
+    patch_commit_url: https://github.com/moderne-backpatch-alliance/backpatch-commons-beanutils/commit/7a7dde6
+    basis: adapted
+    artifacts:
+      - commons-beanutils:commons-beanutils
+    note: New in this release; adapted onto 1.6.1; fixed at 1.6.1.1-backpatch-00002 (backpatch-commons-beanutils@7a7dde6).
 tests:
-  commit: a55bce0aae5ed3f7546cb3f35a3ce71197446bda
+  commit: 7a7dde6d420009336f2fed776a96da7969f412db
   command: "JAVA_HOME=<jdk-7> /bin/bash <alliance>/work/wave2/items/scripts/commons-beanutils-1.6.1.sh suite <m2> "
   runtime: Azul Zulu (Java 1.7.0_55), Apache Ant 1.9.16, macOS x86_64 under Rosetta 2
-  report: commons-beanutils-1.6.1.1-backpatch-00001-tests.zip
-  report_sha256: d1b44e8911b819157e10ad8e0ea27c14eb1e025f2f60ac39e9edd2dbd035bd3e
+  report: commons-beanutils-1.6.1.1-backpatch-00002-tests.zip
+  report_sha256: 0b616769120db3085b0ffb18d3c3afcf90805ee2f5f280ec35b10ed06456e7e4
   result: pass
-  note: "the full suite at the tested commit, 332 tests run, 1 failed, each failing at the baseline v1.6.1+backpatch.baseline too (the same suite there: 326 run, 1 failed), 0 skipped; the regression tests for CVE-2019-10086 are Jira520TestCase, SuppressClassPropertyTestCase"
+  note: "run at fea4a1d97c96, whose tree equals this commit's apart from .backpatch/patch-evidence.yaml; the full suite at the tested commit, 339 tests run, 1 failed, each failing at the baseline v1.6.1+backpatch.baseline too (the same suite there: 326 run, 1 failed), 0 skipped; the regression tests for CVE-2025-48734 are EnumDeclaringClassTestCase, SuppressDeclaringClassPropertyTestCase"
