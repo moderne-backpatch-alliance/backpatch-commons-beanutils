@@ -21,9 +21,9 @@ fixes:
     note: New in this release; adapted onto 1.8.3; fixed at 1.8.3.1-backpatch-00002 (backpatch-commons-beanutils@ef5c124).
 tests:
   commit: ef5c12407a48f58d77dd50960a13df8ee8ff0a75
-  command: JAVA_HOME=<jdk-7> /bin/bash <alliance>/work/wave2/items/scripts/maven-forked-javac.sh suite <m2>  <alliance>/work/wave2/items/scripts/javac6-in-container.sh -Djvm=<sdkman>/java/7.0.352-zulu/bin/java
-  runtime: Azul Zulu (Java 1.7.0_352), Apache Maven 3.9.16, main classes compiled by Zulu 6u42 javac in a linux/amd64 container, macOS x86_64 under Rosetta 2
+  command: "JAVA_HOME=<jdk-7> JAVA_TOOL_OPTIONS='-XX:CompileCommand=quiet -XX:CompileCommand=exclude,org/apache/commons/beanutils/memoryleaktests/MemoryLeakTestCase.forceGarbageCollection' /bin/bash <alliance>/work/wave2/items/scripts/maven-forked-javac.sh suite <m2>  <alliance>/work/wave2/items/scripts/javac6-in-container.sh -Djvm=<sdkman>/java/7.0.352-zulu/bin/java"
+  runtime: "Azul Zulu (Java 1.7.0_352), Apache Maven 3.9.16, main classes compiled by Zulu 6u42 javac in a linux/amd64 container, macOS x86_64 under Rosetta 2"
   report: commons-beanutils-1.8.3.1-backpatch-00002-tests.zip
-  report_sha256: 975686ac4e06e4d5d84a7a79295025c98ef39001aef8eb32cf1c8a778d89805e
+  report_sha256: 49dce1b459450723b85a8dc238003c53a240abe8d471ec2513d6686e24e14746
   result: pass
-  note: "run at 1550e999a469, whose tree equals this commit's apart from .backpatch/patch-evidence.yaml; the full suite at the tested commit, 1190 tests run, 1 failed, each failing at the baseline v1.8.3+backpatch.baseline too (the same suite there: 1177 run, 1 failed), 0 skipped; 1 failed in the full run and passed on two reruns: org.apache.commons.beanutils.memoryleaktests.MemoryLeakTestCase#testMappedPropertyDescriptor_MappedMethodReference2; the regression tests for CVE-2025-48734 are EnumDeclaringClassTestCase, SuppressDeclaringClassPropertyTestCase"
+  note: "the full suite at the tested commit, 1190 tests run, 0 failed, 0 skipped; MemoryLeakTestCase.forceGarbageCollection runs uncompiled (CompileCommand exclude): once C2 compiles its fill loop, the soft reference it waits on stays reachable and the memory leak tests fail; the regression tests for CVE-2025-48734 are EnumDeclaringClassTestCase, SuppressDeclaringClassPropertyTestCase"
