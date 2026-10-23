@@ -1,0 +1,21 @@
+schema: osera-patch-evidence/0.1.0
+producer: moderne
+release: 1.6.1.1-backpatch-00001
+baseline: v1.6.1+backpatch.baseline
+fixes:
+  - cve: CVE-2019-10086
+    upstream_fix_url: https://github.com/apache/commons-beanutils/commit/62e82ad92cf4818709d6044aaf257b73d42659a4
+    advisory_url: https://nvd.nist.gov/vuln/detail/CVE-2019-10086
+    patch_commit_url: https://github.com/moderne-backpatch-alliance/backpatch-commons-beanutils/commit/a55bce0
+    basis: adapted
+    artifacts:
+      - commons-beanutils:commons-beanutils
+    note: New in this release; adapted onto 1.6.1; fixed at 1.6.1.1-backpatch-00001 (backpatch-commons-beanutils@a55bce0).
+tests:
+  commit: a55bce0aae5ed3f7546cb3f35a3ce71197446bda
+  command: "JAVA_HOME=<jdk-7> /bin/bash <alliance>/work/wave2/batch-4/green-suites/scripts/commons-beanutils-1.6.1.sh suite <m2> "
+  runtime: "Azul Zulu (Java 1.7.0_55), Apache Ant 1.9.16, macOS x86_64 under Rosetta 2"
+  report: commons-beanutils-1.6.1.1-backpatch-00001-tests.zip
+  report_sha256: 4515875ae03daa36fb949b35900cc62a653fe9a04d263d70de40ec96410da86b
+  result: pass
+  note: "the full suite at the tested commit, 331 tests run, 0 failed, 0 skipped; excluded: BeanComparatorTestCase#testCompareOnBooleanProperty, which expects a ClassCastException because java.lang.Boolean was not Comparable before Java 5; the class's other 7 tests run through BeanComparatorTestCaseWithoutBooleanProperty; the regression tests for CVE-2019-10086 are Jira520TestCase, SuppressClassPropertyTestCase"
