@@ -1,6 +1,6 @@
 schema: osera-patch-evidence/0.1.0
 producer: moderne
-release: 1.8.3.1-backpatch-00001
+release: 1.8.3.1-backpatch-00002
 baseline: v1.8.3+backpatch.baseline
 fixes:
   - cve: CVE-2019-10086
@@ -10,12 +10,20 @@ fixes:
     basis: adapted
     artifacts:
       - commons-beanutils:commons-beanutils
-    note: New in this release; adapted onto 1.8.3; fixed at 1.8.3.1-backpatch-00001 (backpatch-commons-beanutils@445e4b8).
+    note: Carried from 1.8.3.1-backpatch-00001.
+  - cve: CVE-2025-48734
+    upstream_fix_url: https://github.com/apache/commons-beanutils/commit/28ad955a1613ed5885870cc7da52093c1ce739dc
+    advisory_url: https://nvd.nist.gov/vuln/detail/CVE-2025-48734
+    patch_commit_url: https://github.com/moderne-backpatch-alliance/backpatch-commons-beanutils/commit/ef5c124
+    basis: adapted
+    artifacts:
+      - commons-beanutils:commons-beanutils
+    note: New in this release; adapted onto 1.8.3; fixed at 1.8.3.1-backpatch-00002 (backpatch-commons-beanutils@ef5c124).
 tests:
-  commit: 445e4b82aaee035e58dd10efb58ec973cc6cc38b
-  command: JAVA_HOME=<jdk-7> /bin/bash <alliance>/work/wave2/items/scripts/maven-forked-javac.sh suite <m2>  <alliance>/work/wave2/items/scripts/javac6-in-container.sh -Djvm=<sdkman>/java/7.0.352-zulu/bin/java
-  runtime: Azul Zulu (Java 1.7.0_352), Apache Maven 3.9.16, main classes compiled by Zulu 6u42 javac in a linux/amd64 container, macOS x86_64 under Rosetta 2
-  report: commons-beanutils-1.8.3.1-backpatch-00001-tests.zip
-  report_sha256: bfcda4f7d0c7d4b9b3707266a55f1bb87fc88b164a2814b8a43e3987f5e4373a
+  commit: ef5c12407a48f58d77dd50960a13df8ee8ff0a75
+  command: "JAVA_HOME=<jdk-7> JAVA_TOOL_OPTIONS='-XX:CompileCommand=quiet -XX:CompileCommand=exclude,org/apache/commons/beanutils/memoryleaktests/MemoryLeakTestCase.forceGarbageCollection' /bin/bash <alliance>/work/wave2/items/scripts/maven-forked-javac.sh suite <m2>  <alliance>/work/wave2/items/scripts/javac6-in-container.sh -Djvm=<sdkman>/java/7.0.352-zulu/bin/java"
+  runtime: "Azul Zulu (Java 1.7.0_352), Apache Maven 3.9.16, main classes compiled by Zulu 6u42 javac in a linux/amd64 container, macOS x86_64 under Rosetta 2"
+  report: commons-beanutils-1.8.3.1-backpatch-00002-tests.zip
+  report_sha256: 49dce1b459450723b85a8dc238003c53a240abe8d471ec2513d6686e24e14746
   result: pass
-  note: "the full suite at the tested commit, 1183 tests run, 1 failed, each failing at the baseline v1.8.3+backpatch.baseline too (the same suite there: 1177 run, 1 failed), 0 skipped; 1 failed in the full run and passed on two reruns: org.apache.commons.beanutils.memoryleaktests.MemoryLeakTestCase#testMappedPropertyDescriptor_MappedMethodReference2; the regression tests for CVE-2019-10086 are Jira157TestCase, Jira520TestCase, SuppressClassPropertyTestCase"
+  note: "the full suite at the tested commit, 1190 tests run, 0 failed, 0 skipped; MemoryLeakTestCase.forceGarbageCollection runs uncompiled (CompileCommand exclude): once C2 compiles its fill loop, the soft reference it waits on stays reachable and the memory leak tests fail; the regression tests for CVE-2025-48734 are EnumDeclaringClassTestCase, SuppressDeclaringClassPropertyTestCase"
