@@ -1,6 +1,6 @@
 schema: osera-patch-evidence/0.1.0
 producer: moderne
-release: 1.6.1.1-backpatch-00002
+release: 1.6.1.1-backpatch-00003
 baseline: v1.6.1+backpatch.baseline
 fixes:
   - cve: CVE-2019-10086
@@ -10,7 +10,7 @@ fixes:
     basis: adapted
     artifacts:
       - commons-beanutils:commons-beanutils
-    note: Carried from 1.6.1.1-backpatch-00001.
+    note: Carried from 1.6.1.1-backpatch-00001; ported onto 1.6.1; fixed at 1.6.1.1-backpatch-00001 (backpatch-commons-beanutils@a55bce0).
   - cve: CVE-2025-48734
     upstream_fix_url: https://github.com/apache/commons-beanutils/commit/28ad955a1613ed5885870cc7da52093c1ce739dc
     advisory_url: https://nvd.nist.gov/vuln/detail/CVE-2025-48734
@@ -18,12 +18,11 @@ fixes:
     basis: adapted
     artifacts:
       - commons-beanutils:commons-beanutils
-    note: New in this release; adapted onto 1.6.1; fixed at 1.6.1.1-backpatch-00002 (backpatch-commons-beanutils@7a7dde6).
+    note: Carried from 1.6.1.1-backpatch-00002; ported onto 1.6.1; fixed at 1.6.1.1-backpatch-00002 (backpatch-commons-beanutils@7a7dde6).
 tests:
-  commit: 7a7dde6d420009336f2fed776a96da7969f412db
-  command: "JAVA_HOME=<jdk-7> /bin/bash <alliance>/work/wave2/batch-4/green-suites/scripts/commons-beanutils-1.6.1.sh suite <m2> "
-  runtime: "Azul Zulu (Java 1.7.0_55), Apache Ant 1.9.16, macOS x86_64 under Rosetta 2"
-  report: commons-beanutils-1.6.1.1-backpatch-00002-tests.zip
-  report_sha256: 561028e18d64e3cc44f83d8d8ba32269b38345d94df0931232d3c1fa1f10c6fd
+  commit: e9898eb8f4487aca6a4c77fa73f7def89eeee937
+  command: none in this repository
+  runtime: none, no build or test ran for this release
+  report: carried, see the evidence of the release named in the note
   result: pass
-  note: "the full suite at the tested commit, 338 tests run, 0 failed, 0 skipped; excluded: BeanComparatorTestCase#testCompareOnBooleanProperty, which expects a ClassCastException because java.lang.Boolean was not Comparable before Java 5; the class's other 7 tests run through BeanComparatorTestCaseWithoutBooleanProperty; the regression tests for CVE-2025-48734 are EnumDeclaringClassTestCase, SuppressDeclaringClassPropertyTestCase"
+  note: "this release is a tooling update, it carries no new fix, nothing ran here; its test provenance is tooling-2026-11-03-commons-beanutils-1.6.1: a tooling update of moderne-backpatch-alliance/backpatch-commons-beanutils at v1.6.1.1-backpatch-00002, whose .backpatch/patch-evidence.yaml says what ran"
