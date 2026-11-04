@@ -1,6 +1,6 @@
 schema: osera-patch-evidence/0.1.0
 producer: moderne
-release: 1.8.3.1-backpatch-00002
+release: 1.8.3.1-backpatch-00003
 baseline: v1.8.3+backpatch.baseline
 fixes:
   - cve: CVE-2019-10086
@@ -10,7 +10,7 @@ fixes:
     basis: adapted
     artifacts:
       - commons-beanutils:commons-beanutils
-    note: Carried from 1.8.3.1-backpatch-00001.
+    note: Carried from 1.8.3.1-backpatch-00001; ported onto 1.8.3; fixed at 1.8.3.1-backpatch-00001 (backpatch-commons-beanutils@445e4b8).
   - cve: CVE-2025-48734
     upstream_fix_url: https://github.com/apache/commons-beanutils/commit/28ad955a1613ed5885870cc7da52093c1ce739dc
     advisory_url: https://nvd.nist.gov/vuln/detail/CVE-2025-48734
@@ -18,12 +18,11 @@ fixes:
     basis: adapted
     artifacts:
       - commons-beanutils:commons-beanutils
-    note: New in this release; adapted onto 1.8.3; fixed at 1.8.3.1-backpatch-00002 (backpatch-commons-beanutils@ef5c124).
+    note: Carried from 1.8.3.1-backpatch-00002; ported onto 1.8.3; fixed at 1.8.3.1-backpatch-00002 (backpatch-commons-beanutils@ef5c124).
 tests:
-  commit: ef5c12407a48f58d77dd50960a13df8ee8ff0a75
-  command: "JAVA_HOME=<jdk-7> JAVA_TOOL_OPTIONS='-XX:CompileCommand=quiet -XX:CompileCommand=exclude,org/apache/commons/beanutils/memoryleaktests/MemoryLeakTestCase.forceGarbageCollection' /bin/bash <alliance>/work/wave2/items/scripts/maven-forked-javac.sh suite <m2>  <alliance>/work/wave2/items/scripts/javac6-in-container.sh -Djvm=<sdkman>/java/7.0.352-zulu/bin/java"
-  runtime: "Azul Zulu (Java 1.7.0_352), Apache Maven 3.9.16, main classes compiled by Zulu 6u42 javac in a linux/amd64 container, macOS x86_64 under Rosetta 2"
-  report: commons-beanutils-1.8.3.1-backpatch-00002-tests.zip
-  report_sha256: 49dce1b459450723b85a8dc238003c53a240abe8d471ec2513d6686e24e14746
+  commit: d2135c1dc30dfcfd82a00311ea9ac46037bf4527
+  command: none in this repository
+  runtime: none, no build or test ran for this release
+  report: carried, see the evidence of the release named in the note
   result: pass
-  note: "the full suite at the tested commit, 1190 tests run, 0 failed, 0 skipped; MemoryLeakTestCase.forceGarbageCollection runs uncompiled (CompileCommand exclude): once C2 compiles its fill loop, the soft reference it waits on stays reachable and the memory leak tests fail; the regression tests for CVE-2025-48734 are EnumDeclaringClassTestCase, SuppressDeclaringClassPropertyTestCase"
+  note: "this release is a tooling update, it carries no new fix, nothing ran here; its test provenance is tooling-2026-11-03-commons-beanutils-1.8.3: a tooling update of moderne-backpatch-alliance/backpatch-commons-beanutils at v1.8.3.1-backpatch-00002, whose .backpatch/patch-evidence.yaml says what ran"
